@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WEL COME ONE</title>
+    <script type="text/javascript" src="/asset/js/instascan.min.js" ></script>	
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<style>
+    html,
+body 
+{
+    min-width: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: azure;
+    background-image: url('../asset/Screens/0.png');
+    background-position: center;
+    background-size: cover;
+}
+video
+{
+    width: 40rem;   
+    border-radius: 2em;
+    border: .1em solid rgb(71 180 202);
+    box-shadow: rgb(71 180 202) 0px 1px 16px 0px, rgb(71 180 202) 0px 0px 0px 1px;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+}
+/* Keyframes Spin */
+@keyframes spin 
+{
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+  /* Spinner */
+.spinner 
+{
+    --spinner-color: white;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+.spinner--dotted 
+{
+    width: 10rem;
+    border: .5rem dotted var(--spinner-color);
+    display: block;
+    animation-duration: 5s;
+}
+/* Media Query for Tablets or iPads */
+@media (max-width: 1024px) {
+    video {
+        width: 30rem;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+}
+</style>
+<body>
+    <img id="msg" style="display: none;" src="../asset/Screens/Welcome Screen.png" alt="">
+    <video id="preview"></video>
+    <button id="home" type="button"  onclick="location.reload()" style="display: none;"><i class="fa fa-home fa-2x"></i></button>
+    <div  style="display: none;" id="container" class="container" role="status" id="loading">
+        <span class="spinner spinner--dotted"></span>
+    </div>
+    <script src="../asset/js/welcome.js"></script>
+</body>
+</html>

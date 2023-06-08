@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../asset/js/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        top: 0;
+        box-sizing: border-box;
+        background-color: black;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    img{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+    }
+    .my-custom-scrollbar {
+        top: 15%;
+        left: 10%;
+        width: 80%;
+        background-color: aliceblue;
+        position: relative;
+        /* margin: 100px 100px 0 100px; */
+        height: 600px;
+        overflow: auto;
+        border-radius: 10px;
+        box-shadow: 0 0 50px #ccc;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+    th{
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    #search{
+        width: 200px;
+    }
+    section{
+        position: absolute;
+        width: 1000px;
+        top: 88%;
+        left: 15%;
+        display: flex;
+        flex-direction: row;
+        justify-content:space-between
+    }
+    .btn{
+        background-color: aliceblue;
+        color: green;
+    }
+    th{
+        text-transform:uppercase;
+    }
+</style>
+<body onload="onLoad()">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table class="table">
+        
+        </table>
+    </div>
+    <section>
+        <div class="card">
+            <div class="card-header">
+            Featured
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(1)">1</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(2)">2</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(3)">3</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(4)">4</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(5)">5</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(6)">6</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(7)">7</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(8)">8</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(9)">9</a></li>
+                <li class="page-item"><a class="page-link" href="#" onclick="getPage(10)">10</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <script src="../asset/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+    <script>
+        const socket = io();
+        var btn = 1
+        function myFunction(){
+
+            var email = document.getElementById("search").value
+            if(!email){
+                alert('please fill the input!')
+                return
+            }
+            else{
+                socket.emit('getEmails', email)
+            }
+        }
+
+        function onLoad(){
+            // location.reload()
+            socket.emit('getAll',1)
+        }
+
+        function getPage(e){
+            // location.reload()
+            // alert(e)
+            socket.emit('getAll',e)
+            if(e == 1){
+                btn = 1
+            }
+            if(e == 2){
+                btn = 111
+            }
+            if(e == 3){
+                btn = 221
+            }
+            if(e == 4){
+                btn = 331
+            }
+            if(e == 5){
+                btn = 441
+            }
+            if(e == 6){
+                btn = 551
+            }
+            if(e == 7){
+                btn = 661
+            }
+            if(e == 8){
+                btn = 771
+            }
+            if(e == 9){
+                btn = 881
+            }
+            if(e == 10){
+                btn = 991
+            }
+        }
+
+        socket.on('userList',(e) => {
+            // location.reload()
+            // console.log(e);
+            document.getElementsByTagName("table")[0].innerHTML= "<tr><th>"+`#`+"</th><th>"+`Number`+"</th><th>"+`Count`+"</th><th>"+`Code`+"</th><th>"+`Attended`+"</th></tr>"
+            for (let i = 0; i < e.length; i++) {
+                document.getElementsByTagName("table")[0].innerHTML+= "<tr><td>"+(i+btn)+"</td><td>"+e[i].number+"</td><td>"+e[i].count+"</td><td>"+e[i].uniqueCode+"</td><td>"+e[i].isAttended+"</td></tr>"
+        }
+        })
+    </script>
+</body>
+</html>

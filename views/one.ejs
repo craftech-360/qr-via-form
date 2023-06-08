@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>USER ONE</title>
+    <link rel="stylesheet" href="../asset/css/style.css">
+    <script type="text/javascript" src="/asset/js/instascan.min.js" ></script>	
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<style>
+    html,
+    body {
+        flex-direction: column;
+    }
+</style>
+<body>
+    <!-- <h1 id="start">Counter One</h1> -->
+    <!-- <h1 id="msg" style="display: none;" > <span id="count"></span> MORE LEFT </h1> -->
+    <img id="img" src="" style="display: none;" alt="">
+    <video id="preview" ></video>
+    <button id="home" type="button"  onclick="location.reload()" style="display: none;"><i class="fa fa-home fa-2x"></i></button>
+    <div  style="display: none;" id="container" class="container" role="status" id="loading">
+        <span class="spinner spinner--dotted"></span>
+    </div>
+    <script src="../asset/js/one.js"></script>
+</body>
+</html>

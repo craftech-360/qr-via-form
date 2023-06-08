@@ -1,0 +1,76 @@
+html,
+body 
+{
+    min-width: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    background-image: url('../Screens/0.png');
+    background-position: center;
+    background-size: cover;
+}
+video
+{
+    position: absolute;
+    width: 50rem;   
+    border-radius: 2em;
+    border: .2em solid rgb(71 180 202);
+    box-shadow: rgb(71 180 202) 0px 1px 16px 0px, rgb(71 180 202) 0px 0px 0px 1px;
+}
+
+h1
+{
+    font-size: 4rem;
+    color: aliceblue;
+}
+
+#img{
+    width: 100%;
+    height: 100%;
+}
+
+/* Keyframes Spin */
+@keyframes spin 
+{
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+  /* Spinner */
+.spinner 
+{
+    --spinner-color: rgb(71 180 202);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+.spinner--dotted 
+{
+    width: 6rem;
+    border: .5rem dotted var(--spinner-color);
+    display: block;
+    animation-duration: 5s;
+}
+
+
+/* Media Query for Tablets or iPads */
+@media (max-width: 1024px) {
+    video {
+        width: 30rem;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+}

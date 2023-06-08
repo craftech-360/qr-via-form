@@ -148,29 +148,12 @@
       </form>
       <!-- <button type="button" id="home" onclick="goToHome()" style="display: none;">HOME</button> -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
       <script>
+        var qrname
         const socket = io()
         function sendData(){
-            // const userDetails = {
-            //     name: 'John Doe',
-            //     email: 'johndoe@example.com',
-            //     age: 25
-            // };
-
-            // fetch('https://example.com/api/user', {
-            // method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // },
-            // body: JSON.stringify(userDetails)
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     console.log('User details sent successfully:', data);
-            // })
-            // .catch(error => {
-            //     console.error('Error sending user details:', error);
-            // });
           var name = document.getElementById('name').value;
           var email = document.getElementById('email').value;
           var phone = document.getElementById('phone').value;
@@ -186,12 +169,40 @@
           document.getElementById('form').style.display = 'none'
           document.getElementById('container').style.display = 'block'
           }
-        //   function goToHome(){
-        //     var url = `http://localhost:4000/`;
-        //     location.replace(url);
-        //   }
+          const firebaseConfig = {
+            apiKey: "AIzaSyBZnFJQJlCQEFdvmFLI0gkSCHHiH1lUAWo",
+            authDomain: "node-file-uploader.firebaseapp.com",
+            projectId: "node-file-uploader",
+            storageBucket: "node-file-uploader.appspot.com",
+            messagingSenderId: "345185058962",
+            appId: "1:345185058962:web:8629baa36820a3c410a64b",
+            measurementId: "G-GSV81VWQE1"
+          };
+          socket.on('saveQr', (e) => {
+            console.log(e);
+            qrname = e.data
+            uploadImage(e.base64QRCode)
+          })
 
-        
+          firebase.initializeApp(firebaseConfig);
+          function uploadImage(your_base64_image) {
+          const base64Data = your_base64_image.replace(/^data:image\/\w+;base64,/, '');
+
+          const metadata = {
+            contentType: 'image/jpeg', // Update the content type if needed (e.g., 'image/png')
+          };
+
+          firebase
+            .storage()
+            .ref('qrCodes')
+            .child(`${qrname}`)
+            .putString(base64Data, 'base64', metadata)
+            .then((snapshot) => snapshot.ref.getDownloadURL())
+            .then((url) => {
+              console.log(url);
+            })
+            .catch(console.error);
+        }
       </script>
 </body>
 </html>

@@ -101,12 +101,17 @@ io.on('connection', (socket) => {
     }
     asyncCall();
   })
-
   socket.on('sendEmail',(e) => {
     console.log('user', e);
     function generateQRCode(data, outputPath) {
       const qrCode = qr.imageSync(data, { type: 'png', size: 10 });
       fs.writeFileSync(outputPath, qrCode);
+      const base64QRCode = qrCode.toString('base64');
+      let fd = {
+        base64QRCode:base64QRCode,
+        data:data
+      }
+      io.emit("saveQr",fd)
     }
     var data = `DBSI${Date.now()}`;
     const outputPath = `./asset/newOne/${data}.png`;
@@ -119,7 +124,6 @@ io.on('connection', (socket) => {
       company: e.company,
       uniqueCode:data
     });
-    
     user.save()
       .then(savedUser => {
         console.log('User saved:', savedUser);
@@ -128,4 +132,5 @@ io.on('connection', (socket) => {
         console.error('Error saving user:', error);
       });
     })
+
 });

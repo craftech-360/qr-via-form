@@ -101,36 +101,45 @@ io.on('connection', (socket) => {
     }
     asyncCall();
   })
+  
   socket.on('sendEmail',(e) => {
     console.log('user', e);
-    function generateQRCode(data, outputPath) {
-      const qrCode = qr.imageSync(data, { type: 'png', size: 10 });
-      fs.writeFileSync(outputPath, qrCode);
-      const base64QRCode = qrCode.toString('base64');
-      let fd = {
-        base64QRCode:base64QRCode,
-        data:data
-      }
-      io.emit("saveQr",fd)
-    }
-    var data = `DBSI${Date.now()}`;
-    const outputPath = `./asset/newOne/${data}.png`;
-    generateQRCode(data, outputPath);
-    console.log(`Generated QR Code ${data}`);
-    const user = new User({
-      name: e.name,
-      email: e.email,
-      phone: e.phone,
-      company: e.company,
-      uniqueCode:data
-    });
-    user.save()
-      .then(savedUser => {
-        console.log('User saved:', savedUser);
-      })
-      .catch(error => {
-        console.error('Error saving user:', error);
-      });
-    })
+    // const email = User.find( {"email":e.email} )
+    // const phone = User.find( {"phone":e.phone} )
+    // if(email ||phone ){
+    //   console.log('yess exist');
+    //   io.emit('error')
+    //   return
+    // }
+    // else{
+      function generateQRCode(data) {
+        const qrCode = qr.imageSync(data, { type: 'png', size: 10 });
+        const base64QRCode = qrCode.toString('base64');
+        let fd = {
+          base64QRCode:base64QRCode,
+          data:data
+        }
+        io.emit("saveQr",fd)
+        }
+      var data = `DBSI${Date.now()}`;
+      generateQRCode(data);
+      console.log(`Generated QR Code ${data}`);
+      // const user = new User({
+      //   name: e.name,
+      //   email: e.email,
+      //   phone: e.phone,
+      //   company: e.company,
+      //   uniqueCode:data
+      // });
+      // user.save()
+      //   .then(savedUser => {
+      //     console.log('User saved:', savedUser);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error saving user:', error);
+      //   });
+            
+    // }
 
+    })
 });

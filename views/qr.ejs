@@ -90,6 +90,17 @@
             left: 45%;
 
         }
+        #msg{
+          background-color: green;
+          color: aliceblue;
+          border: none;
+          width: 450px;
+          font-weight: bold;
+          padding: 10px ;
+          font-size: 1em;
+          letter-spacing: 1PX;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
         /* Keyframes Spin */
 @keyframes spin 
 {
@@ -122,9 +133,8 @@
 </head>
 
 <body>
-  <div  id="msg" onclick="goToHome()" style="border-radius:200px; height:300px; width:300px; background: #F8FAF5; margin:0 auto; display: none; align-items: center; justify-content: center; text-align: center;">
-    <i class="checkmark">✓ <br> Success</i>
-  </div>
+  <button style="display: none;" type="button" id="msg" onclick="goToForm()">YOUR FORM SUBMITTED SUCCESSFULLY!</button>
+
   <div  style="display: none;" id="container" class="container" role="status" id="loading">
     <span class="spinner spinner--dotted"></span>
   </div>
@@ -166,6 +176,9 @@
           }
           socket.emit('sendEmail', data)
           document.getElementById('email').value = ''
+          document.getElementById('name').value = ''
+          document.getElementById('company').value = ''
+          document.getElementById('phone').value = ''
           document.getElementById('form').style.display = 'none'
           document.getElementById('container').style.display = 'block'
           }
@@ -179,7 +192,6 @@
             measurementId: "G-GSV81VWQE1"
           };
           socket.on('saveQr', (e) => {
-            console.log(e);
             qrname = e.data
             uploadImage(e.base64QRCode)
           })
@@ -199,9 +211,15 @@
             .putString(base64Data, 'base64', metadata)
             .then((snapshot) => snapshot.ref.getDownloadURL())
             .then((url) => {
-              console.log(url);
+              document.getElementById('container').style.display = 'none'
+              document.getElementById('msg').style.display = 'block'
             })
             .catch(console.error);
+        }
+
+        function goToForm(){
+          document.getElementById('msg').style.display = 'none'
+          document.getElementById('form').style.display = 'block'
         }
       </script>
 </body>

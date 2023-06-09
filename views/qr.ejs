@@ -102,33 +102,50 @@
           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }
         /* Keyframes Spin */
-@keyframes spin 
-{
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
+        @keyframes spin 
+        {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-  /* Spinner */
-.spinner 
-{
-    --spinner-color: #f6a508;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    animation-name: spin;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-.spinner--dotted 
-{
-    width: 8rem;
-    border: .5rem dotted var(--spinner-color);
-    display: block;
-    animation-duration: 5s;
-}
+          /* Spinner */
+        .spinner 
+        {
+            --spinner-color: #f6a508;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            animation-name: spin;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        .spinner--dotted 
+        {
+            width: 8rem;
+            border: .5rem dotted var(--spinner-color);
+            display: block;
+            animation-duration: 5s;
+        }
+        @media only screen and (max-width: 768px) {
+        form {
+          width: 90%;
+        }
+
+        #button,
+        #home,
+        #msg {
+          font-size: 1.2em;
+          max-width: 200px;
+          padding: 10px;
+        }
+
+        h6 {
+          font-size: 2em;
+        }
+      }
     </style>
 </head>
 
@@ -162,6 +179,7 @@
       <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
       <script>
         var qrname
+        var useremail
         const socket = io()
         function sendData(){
           var name = document.getElementById('name').value;
@@ -174,7 +192,7 @@
             phone:phone,
             company:company
           }
-          socket.emit('sendEmail', data)
+          socket.emit('saveData', data)
           document.getElementById('email').value = ''
           document.getElementById('name').value = ''
           document.getElementById('company').value = ''
@@ -193,6 +211,7 @@
           };
           socket.on('saveQr', (e) => {
             qrname = e.data
+            useremail = e.email
             uploadImage(e.base64QRCode)
           })
 
@@ -211,6 +230,11 @@
             .putString(base64Data, 'base64', metadata)
             .then((snapshot) => snapshot.ref.getDownloadURL())
             .then((url) => {
+              let data = {
+                url:url,
+                email:useremail
+              }
+              socket.emit('sendEmail',data)
               document.getElementById('container').style.display = 'none'
               document.getElementById('msg').style.display = 'block'
             })

@@ -42,26 +42,7 @@ mongoose.connect(mongo_URI, {useNewUrlParser:true, useUnifiedTopology:true})
 
 server.listen(PORT,()=>{ console.log(`server started on ${PORT}`) })
  
-let transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  secure: true,
-  auth: {
-      user: "craftech360@gmail.com",
-      pass: "zfjdfqsspfoiqast"
-  },
-})
-let mailOptions;
-mailOptions = {
-  from: '"Craftech360" <accounts@craftech360.com>', // sender address
-  to: "", // list of receivers
-  subject: "Leave an impression behind with every interaction!", // Subject line
-  attachments: [
-    {
-        filename: 'final.jpg', // <= Here: made sure file name match
-        path: path.join(__dirname, './public/final/final.jpg'), // <= Here
-    }
-]
-};
+
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -102,8 +83,9 @@ io.on('connection', (socket) => {
     asyncCall();
   })
   
-  socket.on('sendEmail',(e) => {
+  socket.on('saveData',(e) => {
     console.log('user', e);
+    var email = e.email
     // const email = User.find( {"email":e.email} )
     // const phone = User.find( {"phone":e.phone} )
     // if(email ||phone ){
@@ -117,29 +99,55 @@ io.on('connection', (socket) => {
         const base64QRCode = qrCode.toString('base64');
         let fd = {
           base64QRCode:base64QRCode,
-          data:data
+          data:data,
+          email:email
         }
         io.emit("saveQr",fd)
         }
       var data = `DBSI${Date.now()}`;
       generateQRCode(data);
       console.log(`Generated QR Code ${data}`);
-      // const user = new User({
-      //   name: e.name,
-      //   email: e.email,
-      //   phone: e.phone,
-      //   company: e.company,
-      //   uniqueCode:data
-      // });
-      // user.save()
-      //   .then(savedUser => {
-      //     console.log('User saved:', savedUser);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error saving user:', error);
-      //   });
+      const user = new User({
+        name: e.name,
+        email: e.email,
+        phone: e.phone,
+        company: e.company,
+        uniqueCode:data
+      });
+      user.save()
+        .then(savedUser => {
+          console.log('User saved:', savedUser);
+          
+        })
+        .catch(error => {
+          console.error('Error saving user:', error);
+        });
             
-    // }
+    })
 
+    socket.on('sendEmail', (e) => {
+      console.log(e);
+      let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        secure: true,
+        auth: {
+            user: "craftech360@gmail.com",
+            pass: "zfjdfqsspfoiqast"
+        },
+      })
+      let mailOptions;
+      mailOptions = {
+        from: '"Craftech360" <accounts@craftech360.com>', // sender address
+        to: "", // list of receivers
+        subject: "Leave an impression behind with every interaction!", // Subject line
+        html: `<h1>Here is your QR Code ${e.url}</h1>`
+      };
+      mailOptions.to = e.email;
+        transporter.sendMail(mailOptions, (err, info) => {
+          if(err) {
+            return console.error(err)
+          }
+          console.log("message sent:", info.messageId)
+        })
     })
 });

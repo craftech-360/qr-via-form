@@ -13,6 +13,7 @@ scanner.addListener('scan', function(content) {
    var a = content;
     socket.emit('getUserOne',(content)); 
     document.getElementById('preview').style.display = 'none'  
+    document.getElementById('scan').style.display = 'none'  
     document.getElementById('container').style.display = 'block' 
 });
 
@@ -46,6 +47,7 @@ socket.on('showCount', (e) => {
             img.src = ''
             document.getElementById('img').style.display = 'none'
             document.getElementById('preview').style.display = 'block'
+            document.getElementById('scan').style.display = 'block'  
         }
     }
     ,1000)

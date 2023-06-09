@@ -21,6 +21,14 @@ const customerSchema = new mongoose.Schema({
   uniqueCode: {
     type: String,
     required: true
+  },
+  isAttended:{
+    type: Boolean,
+    default:false
+  },
+  count:{
+    type: Number,
+    default:0
   }
 });
 

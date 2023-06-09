@@ -13,6 +13,7 @@ scanner.addListener('scan', function(content) {
     socket.emit('welcomeUserOne',(content)); 
     document.getElementById('preview').style.display = 'none'  
     document.getElementById('container').style.display = 'block'  
+    document.getElementById('scan').style.display = 'none'  
 });
 
 Instascan.Camera.getCameras().then(cameras => 
@@ -28,6 +29,8 @@ socket.on('welcomeOne', (e) => {
     console.log(e);
     document.getElementById('container').style.display = 'none'  
     document.getElementById('msg').style.display = 'block'
+    document.getElementById('scan').style.display = 'none'
+    document.getElementById('name').innerText = e
     var timer = 7
     var cleartime = setInterval(
         function (){
@@ -36,8 +39,12 @@ socket.on('welcomeOne', (e) => {
             clearInterval(cleartime)
             document.getElementById('msg').style.display = 'none'
             document.getElementById('preview').style.display = 'block'
-            document.getElementById('start').style.display = 'block'
+            document.getElementById('scan').style.display = 'block'
         }
     }
     ,1000)
+})
+
+socket.on('welcomeEmail', (e) =>{
+    socket.emit('sendWelcomeEmail', e)
 })

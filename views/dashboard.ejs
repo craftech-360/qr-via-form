@@ -18,19 +18,14 @@
         top: 0;
         box-sizing: border-box;
         background-color: black;
-        font-family: 'Courier New', Courier, monospace;
-    }
-    img{
-        width: 100%;
-        height: 100%;
-        position: absolute;
+        font-family: 'Poppins', sans-serif;
     }
     ::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
     }
     .my-custom-scrollbar {
-        top: 15%;
+        top: 25%;
         left: 10%;
         width: 80%;
         background-color: aliceblue;
@@ -67,23 +62,45 @@
     th{
         text-transform:uppercase;
     }
+    h1{
+          position: absolute;
+          bottom: 10px;
+          font-size: 1.5em;
+          color: aliceblue;
+          left: 40%;
+        }
+        #logo{
+          position: absolute;
+          width: 300px;
+          top: 0;
+          left: 0;
+          margin: 50px;
+        }
+        
+        h2{
+    position: absolute;
+    top: 12%;
+    font-size:2.5em;
+    color: #f6a508;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: #f6a508 2px solid ;
+    left: 40%;
+}
+
+    
 </style>
 <body onload="onLoad()">
+    <h2 id="scan">Registered User List</h2>
+    <h1>Crafting Magical Experiences</h1>
+    <img src="../asset/Screens/logo.png" id="logo" alt="">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table">
         
         </table>
     </div>
     <section>
-        <div class="card">
-            <div class="card-header">
-            Featured
-            </div>
-            <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            </div>
-        </div>
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example" style="display: none;">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#" onclick="getPage(1)">1</a></li>
                 <li class="page-item"><a class="page-link" href="#" onclick="getPage(2)">2</a></li>
@@ -160,9 +177,9 @@
         socket.on('userList',(e) => {
             // location.reload()
             // console.log(e);
-            document.getElementsByTagName("table")[0].innerHTML= "<tr><th>"+`#`+"</th><th>"+`Number`+"</th><th>"+`Count`+"</th><th>"+`Code`+"</th><th>"+`Attended`+"</th></tr>"
+            document.getElementsByTagName("table")[0].innerHTML= "<tr><th>"+`#`+"</th><th>"+`Name`+"</th><th>"+`Count`+"</th><th>"+`Code`+"</th><th>"+`Attended`+"</th></tr>"
             for (let i = 0; i < e.length; i++) {
-                document.getElementsByTagName("table")[0].innerHTML+= "<tr><td>"+(i+btn)+"</td><td>"+e[i].number+"</td><td>"+e[i].count+"</td><td>"+e[i].uniqueCode+"</td><td>"+e[i].isAttended+"</td></tr>"
+                document.getElementsByTagName("table")[0].innerHTML+= "<tr><td>"+(i+btn)+"</td><td>"+e[i].name+"</td><td>"+e[i].count+"</td><td>"+e[i].uniqueCode+"</td><td>"+e[i].isAttended+"</td></tr>"
         }
         })
     </script>

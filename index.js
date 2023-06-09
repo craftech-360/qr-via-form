@@ -41,8 +41,6 @@ mongoose.connect(mongo_URI, {useNewUrlParser:true, useUnifiedTopology:true})
   .catch(err => console.error(err))
 
 server.listen(PORT,()=>{ console.log(`server started on ${PORT}`) })
- 
-
 
 io.on('connection', (socket) => {
   console.log('New user connected:', socket.id);
@@ -53,7 +51,7 @@ io.on('connection', (socket) => {
 
   socket.on('getAll' ,(e) => {
     async function asyncCall() {
-      const result = await User.find( { "isAttended": false })
+      const result = await User.find()
       .skip((e-1) * 120)
       .limit(120)
       io.emit('userList', result)
@@ -64,8 +62,14 @@ io.on('connection', (socket) => {
   socket.on('welcomeUserOne' , (e) => {
     console.log(e);
     async function asyncCall() {
+      const result = await User.findOne( { "uniqueCode": e } )
       await User.updateOne({"uniqueCode":e},{$set: {"isAttended":true}})
-      io.emit('welcomeOne')
+      io.emit('welcomeOne',result.name)
+      let details = {
+        email:result.email,
+        name:result.name
+      }
+      io.emit('welcomeEmail',details)
     }
     asyncCall();
   })
@@ -91,6 +95,7 @@ io.on('connection', (socket) => {
   socket.on('saveData',(e) => {
     console.log('user', e);
     var email = e.email
+    var name = e.name
     // const email = User.find( {"email":e.email} )
     // const phone = User.find( {"phone":e.phone} )
     // if(email ||phone ){
@@ -105,7 +110,8 @@ io.on('connection', (socket) => {
         let fd = {
           base64QRCode:base64QRCode,
           data:data,
-          email:email
+          email:email,
+          name:name
         }
         io.to(userId).emit("saveQr",fd)
         }
@@ -144,8 +150,56 @@ io.on('connection', (socket) => {
       mailOptions = {
         from: '"Craftech360" <accounts@craftech360.com>', // sender address
         to: "", // list of receivers
-        subject: "Leave an impression behind with every interaction!", // Subject line
-        html: `<h1>Here is your QR Code ${e.url}</h1>`
+        subject: "Simplify Event Registration with Our QR Code Application", // Subject line
+        html: `<p>Dear ${e.name},</p>
+        <p>Thank you for exploring our QR code registration application! We appreciate your interest in simplifying event registration and enhancing attendee experiences.</p>
+        <p>Our company, Craftech360, is dedicated to revolutionizing the event industry through innovative technology solutions. With a passion for creating seamless and engaging experiences, we have developed a cutting-edge QR code registration application that streamlines the check-in process, eliminates physical tickets, and ensures a hassle-free registration experience.</p>
+        <p>To give you a firsthand experience of the convenience and efficiency our application offers, we invite you to try our demo by accessing the following QR code link: <a href="${e.url}">Click here</a>.</p>
+        <p>By leveraging the power of QR codes, we enable event organizers like you to deliver a seamless registration process and create memorable events that leave a lasting impression on attendees.</p>
+        <p>Should you have any questions or require further assistance, please feel free to reach out. We are here to support you and ensure your events are a resounding success.</p>
+        <p>Thank you once again for your interest and trust in our QR code registration application.</p.
+        <p>Warm regards,</p>
+        <p>Pradeep Zille </p>
+        <p>Co-founder and CBO</p>
+        <p>Craftech360</p>
+        `
+      };
+      mailOptions.to = e.email;
+        transporter.sendMail(mailOptions, (err, info) => {
+          if(err) {
+            return console.error(err)
+          }
+          console.log("message sent:", info.messageId)
+        })
+    })
+
+    socket.on('sendWelcomeEmail', (e) => {
+      console.log(e);
+      let transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        secure: true,
+        auth: {
+            user: "craftech360@gmail.com",
+            pass: "zfjdfqsspfoiqast"
+        },
+      })
+      let mailOptions;
+      mailOptions = {
+        from: '"Craftech360" <accounts@craftech360.com>', // sender address
+        to: "", // list of receivers
+        subject: "Thank You for Trying Our QR Code Demo", // Subject line
+        html: `<p>Dear ${e.name},</p>
+        <p>We wanted to express our heartfelt gratitude for trying out our QR code registration demo. As India's leading tech experiential marketing company, Craftech 360 is dedicated to delivering innovative, interactive, and immersive experiences that captivate audiences.</p>
+        <p>We take immense pride in our team of passionate engineers and tech makers who bring a unique engineering mindset to every project. Their dedication and expertise have earned us prestigious awards and accolades in the industry.</p>
+        <p>Your interest in our QR code application demonstrates your commitment to simplifying event registration and creating unforgettable experiences for attendees. We are thrilled to have the opportunity to support you in achieving these goals.</p>
+        <p>Thank you once again for your time and support. We look forward to the possibility of collaborating with you and delivering exceptional event experiences together.</p>
+        <p>Should you have any questions or require further assistance, please feel free to reach out. We are here to support you and ensure your events are a resounding success.</p>
+        <p>Thank you once again for your interest and trust in our QR code registration application.</p.
+        <p>Best regards,</p>
+        <p>Pradeep Zille </p>
+        <p>Co-founder and CBO</p>
+        <p>Craftech360</p>
+        `
       };
       mailOptions.to = e.email;
         transporter.sendMail(mailOptions, (err, info) => {

@@ -9,26 +9,41 @@ body
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
-    background-image: url('../Screens/0.png');
-    background-position: center;
-    background-size: cover;
+    background-color: black;
 }
 video
 {
     position: absolute;
     width: 50rem;   
     border-radius: 2em;
-    border: .2em solid rgb(71 180 202);
-    box-shadow: rgb(71 180 202) 0px 1px 16px 0px, rgb(71 180 202) 0px 0px 0px 1px;
+    border: .2em solid #f6a508;
+    box-shadow: #f6a508 0px 1px 16px 0px, #f6a508 0px 0px 0px 1px;
+}
+h2{
+    position: absolute;
+    top: 12%;
+    font-size:2.5em;
+    color: #f6a508;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: #f6a508 2px solid ;
 }
 
-h1
-{
-    font-size: 4rem;
+h1{
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.5em;
     color: aliceblue;
-}
+  }
+  #logo{
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 0;
+    margin: 50px;
+  }
 
 #img{
     width: 100%;

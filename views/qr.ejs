@@ -180,6 +180,7 @@
       <script>
         var qrname
         var useremail
+
         const socket = io()
         function sendData(){
           var name = document.getElementById('name').value;
@@ -235,6 +236,7 @@
                 email:useremail
               }
               socket.emit('sendEmail',data)
+              useremail = ''
               document.getElementById('container').style.display = 'none'
               document.getElementById('msg').style.display = 'block'
             })

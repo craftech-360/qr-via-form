@@ -45,7 +45,12 @@ server.listen(PORT,()=>{ console.log(`server started on ${PORT}`) })
 
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('New user connected:', socket.id);
+
+  // Join a room based on user-specific data (e.g., user ID)
+  const userId = socket.id  // Replace with the actual user ID
+  socket.join(userId);
+
   socket.on('getAll' ,(e) => {
     async function asyncCall() {
       const result = await User.find( { "isAttended": false })
@@ -102,7 +107,7 @@ io.on('connection', (socket) => {
           data:data,
           email:email
         }
-        io.emit("saveQr",fd)
+        io.to(userId).emit("saveQr",fd)
         }
       var data = `DBSI${Date.now()}`;
       generateQRCode(data);

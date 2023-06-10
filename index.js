@@ -1,52 +1,53 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const cors = require('cors')
-const PORT = 3000
-const User = require('./models/Customer')
-const path = require('path')
-const app = express()
-const fs = require('fs');
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
-const csvtojson = require('csvtojson')
-const qr = require('qr-image');
-const nodemailer = require('nodemailer')
-const md5 = require("md5");
+const express = require('express'),
+      mongoose = require('mongoose'),
+      cors = require('cors'),
+      PORT = 3000,
+      User = require('./models/Customer'),
+      path = require('path'),
+      app = express(),
+      fs = require('fs'),
+      server = require("http").createServer(app),
+      io = require("socket.io")(server),
+      csvtojson = require('csvtojson'),
+      qr = require('qr-image'),
+      nodemailer = require('nodemailer'),
+      md5 = require("md5");
 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile)
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({extended: true,limit: '50mb'}));
 app.use('/asset', express.static(path.join(__dirname, 'asset')))
+app.use(cors())
 
 app.get('/', function (req, res) {
   res.render("dashboard.ejs");
 });
-app.get('/one', function (req, res) {
-  res.render("one.ejs");
+app.get('/home', function (req, res) {
+  res.render("home.ejs");
 });
 app.get('/welcome', function (req, res) {
   res.render("welcome.ejs"); 
 });
-
 app.get('/qr', function (req, res) {
   res.render("qr.ejs"); 
 });
 
+const mongo_URI = 'mongodb+srv://SAC:G8BO4x3rWEDFSYqk@cluster0.btu1pyt.mongodb.net/hammer-users';
 
-app.use(cors())
-const mongo_URI = 'mongodb+srv://SAC:G8BO4x3rWEDFSYqk@cluster0.btu1pyt.mongodb.net/hammer-users'
-mongoose.connect(mongo_URI, {useNewUrlParser:true, useUnifiedTopology:true})
-  .then(result => {console.log('Connected To DB')})
-  .catch(err => console.error(err))
-
-server.listen(PORT,()=>{ console.log(`server started on ${PORT}`) })
+mongoose.connect(mongo_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(result => {
+    console.log('Connected to the MongoDB database');
+  })
+  .catch(error => {
+    console.error('Error connecting to the MongoDB database:', error);
+  });
+  
+server.listen(PORT,() =>{ console.log(`server started on ${PORT}`) })
 
 io.on('connection', (socket) => {
   console.log('New user connected:', socket.id);
-
-  // Join a room based on user-specific data (e.g., user ID)
-  const userId = socket.id  // Replace with the actual user ID
+  const userId = socket.id 
   socket.join(userId);
 
   socket.on('getAll' ,(e) => {
@@ -96,11 +97,17 @@ io.on('connection', (socket) => {
     console.log('user', e);
     var email = e.email
     var name = e.name
-    // const email = User.find( {"email":e.email} )
-    // const phone = User.find( {"phone":e.phone} )
-    // if(email ||phone ){
+    // const isEmailExist = User.findOne( {"email":e.email} )
+    // console.log(isEmailExist,"ee");
+    // if(isEmailExist.email == email){
     //   console.log('yess exist');
-    //   io.emit('error')
+    //   let removeEmail = {
+    //     name:e.name,
+    //     email:'',
+    //     phone:e.phone,
+    //     company:e.company
+    //   }
+    //   io.emit('error',removeEmail)
     //   return
     // }
     // else{
@@ -133,7 +140,7 @@ io.on('connection', (socket) => {
         .catch(error => {
           console.error('Error saving user:', error);
         });
-            
+      // }       
     })
 
     socket.on('sendEmail', (e) => {
@@ -151,7 +158,9 @@ io.on('connection', (socket) => {
         from: '"Craftech360" <accounts@craftech360.com>', // sender address
         to: "", // list of receivers
         subject: "Simplify Event Registration with Our QR Code Application", // Subject line
-        html: `<p>Dear ${e.name},</p>
+        html: `  <body style="width: 100%;height: 100%;display: flex;justify-content: center;">
+        <div style=" border: 2px solid black; text-align:left; width: 50%;letter-spacing: 2px; padding: 40px 30px 40px 30px;margin-left:200px">
+        <p>Dear ${e.name},</p>
         <p>Thank you for exploring our QR code registration application! We appreciate your interest in simplifying event registration and enhancing attendee experiences.</p>
         <p>Our company, Craftech360, is dedicated to revolutionizing the event industry through innovative technology solutions. With a passion for creating seamless and engaging experiences, we have developed a cutting-edge QR code registration application that streamlines the check-in process, eliminates physical tickets, and ensures a hassle-free registration experience.</p>
         <p>To give you a firsthand experience of the convenience and efficiency our application offers, we invite you to try our demo by accessing the following QR code link: <a href="${e.url}">Click here</a>.</p>
@@ -162,6 +171,8 @@ io.on('connection', (socket) => {
         <p>Pradeep Zille </p>
         <p>Co-founder and CBO</p>
         <p>Craftech360</p>
+        </div>
+    <body>
         `
       };
       mailOptions.to = e.email;

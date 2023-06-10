@@ -1,0 +1,156 @@
+html,
+body {
+  font-family: 'Poppins', sans-serif;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+form{
+  border: .5px solid aliceblue;
+  width: 50vw;
+  text-align: center;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  box-shadow: rgb(255, 255, 255) 0px 2px 8px 0px;
+}
+#submitButton{
+  margin-top: 20px;
+    background-color: #f6a508;
+    color: aliceblue;
+    border: none;
+    width: 15rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 5PX;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  #home{
+    background-color: #f6a508;
+    color: aliceblue;
+    border: none;
+    width: 250px;
+    padding: 16px;
+    font-weight: bold;
+    font-size: 2em;
+    letter-spacing: 5PX;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  section{
+    text-align: center;
+  }
+  h6{
+    font-weight: bold;
+    letter-spacing: 2PX;
+    font-size: 2rem;
+    color: #f6a508;
+  }
+  #container{
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  h1{
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.5em;
+    color: aliceblue;
+  }
+  #logo{
+    position: absolute;
+    width: 16vw;
+    top: 0;
+    left: 0;
+    margin: 50px;
+  }
+  p{
+    color: red;
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 2px;
+  }
+    .form-group{
+    width: 40vw;
+    margin:  2rem auto;
+    padding: 0;
+  }
+ 
+  /* Keyframes Spin */
+  @keyframes spin 
+  {
+      from {
+          transform: rotate(0deg);
+      }
+      to {
+          transform: rotate(360deg);
+      }
+  }
+
+    /* Spinner */
+  .spinner 
+  {
+
+      --spinner-color: #f6a508;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      animation-name: spin;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+  }
+  .spinner--dotted 
+  {
+      width: 8rem;
+      border: .5rem dotted var(--spinner-color);
+      display: block;
+      animation-duration: 5s;
+  }
+
+  @media only screen and (max-width: 768px) {
+  form {
+    margin: 0;
+    width: 90vw;
+    text-align: center;
+    padding: 4rem 0 4rem 0;
+    border: .5px solid aliceblue;
+    border-radius: 10px;
+    box-shadow: rgb(255, 255, 255) 0px 2px 8px 0px;
+  }
+
+  #logo{
+    position: absolute;
+    width: 12rem;
+    margin: 10px;
+    
+  }
+
+  #submitButton {
+    font-size: .8em;
+    max-width: 50vw;
+    padding: 10px;
+    border-radius: 10px;
+  }
+ 
+
+  h6 {
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    color: #f6a508;
+    padding-bottom: 1rem;
+  }
+
+  .form-group{
+    width: 60vw;
+    margin:  1rem auto;
+    padding: 0;
+  }
+  h1{
+    bottom: 20px;
+    font-size: 1em;
+  }
+}

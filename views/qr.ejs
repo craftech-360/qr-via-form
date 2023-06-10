@@ -4,195 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="/socket.io/socket.io.js"></script>
+    <title>QR Scanner</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <style>
-      html,
-      body {
-        font-family: 'Poppins', sans-serif;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: black;
-      }
-      label{
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 10px;
-        font-size: 25px;
-        margin-top: 20px;
-      }
-      /* input{
-        width: 100%;
-        padding: 25px;
-        border: none;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        margin:15px auto;
-        border-radius: 10px;
-      }
-      input::placeholder{
-        font-size: 2em;
-      } */
-
-      form{
-        border: .5px solid aliceblue;
-        width: 50%;
-        text-align: center;
-        padding: 100px;
-        border-radius: 30px;
-        box-shadow: rgb(255, 255, 255) 0px 2px 8px 0px;
-      }
-      #submitButton{
-        margin-top: 20px;
-          background-color: #f6a508;
-          color: aliceblue;
-          border: none;
-          width: 250px;
-          font-weight: bold;
-          font-size: 1.5em;
-          letter-spacing: 5PX;
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
-        #home{
-          background-color: #f6a508;
-          color: aliceblue;
-          border: none;
-          width: 250px;
-          padding: 16px;
-          font-weight: bold;
-          font-size: 2em;
-          letter-spacing: 5PX;
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
-        section{
-          padding-bottom: 30px;
-          text-align: center;
-        }
-        h6{
-          text-align: center;
-          font-weight: 700;
-          letter-spacing: 2PX;
-          font-size: 3em;
-          margin: 10px;
-          color: #f6a508;
-        }
-        #container{
-            position: absolute;
-            top: 45%;
-            left: 45%;
-
-        }
-        h1{
-          position: absolute;
-          bottom: 10px;
-          font-size: 1.5em;
-          color: aliceblue;
-        }
-        #logo{
-          position: absolute;
-          width: 300px;
-          top: 0;
-          left: 0;
-          margin: 50px;
-        }
-       
-        /* Keyframes Spin */
-        @keyframes spin 
-        {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-          /* Spinner */
-        .spinner 
-        {
-            --spinner-color: #f6a508;
-            aspect-ratio: 1/1;
-            border-radius: 50%;
-            animation-name: spin;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
-        }
-        .spinner--dotted 
-        {
-            width: 8rem;
-            border: .5rem dotted var(--spinner-color);
-            display: block;
-            animation-duration: 5s;
-        }
-        .form-group{
-          width: 80%;
-          margin:  40px auto;
-          padding: 0;
-        }
-        @media only screen and (max-width: 768px) {
-        form {
-          margin: 0;
-          width: 80%;
-          text-align: center;
-          padding: 50px 0 50px 0;
-          border: .5px solid aliceblue;
-          border-radius: 10px;
-          box-shadow: rgb(255, 255, 255) 0px 2px 8px 0px;
-        }
-
-        #logo{
-          position: absolute;
-          width: 150px;
-          margin: 10px;
-        }
-
-        #button,
-        #home {
-          font-size: .8em;
-          max-width: 400px;
-          padding: 10px;
-          border-radius: 10px;
-        }
-       
-
-        h6 {
-          font-size: 1.5em;
-          letter-spacing: 2px;
-          color: #f6a508;
-        }
-        input{
-          padding: 15px;
-        }
-        input::placeholder{
-          font-size: 1em;
-        }
-        .form-group{
-          width: 80%;
-          margin:  20px auto;
-          padding: 0;
-        }
-        h1{
-          bottom: 20px;
-          font-size: 1em;
-        }
-      }
-    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="../asset/css/qr.css">
 </head>
-
 <body>
   <h1>Crafting Magical Experiences</h1>
   <img src="../asset/Screens/logo.png" id="logo" alt="">
-  <!-- <button  type="button" id="msg" onclick="goToForm()"><strong style="color: black;">Success!</strong>Your form has been submitted successfully</button> -->
   <div class="alert alert-success alert-dismissible fade show"  id="msg" style="display: none;">
     <strong>Success!</strong> Your form has been sent successfully.
     <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="goToForm()"></button>
-</div>
+  </div>
   <div  style="display: none;" id="container" class="container" role="status" id="loading">
     <span class="spinner spinner--dotted"></span>
   </div>
@@ -210,9 +33,7 @@
     <div class="form-group">
       <label for="email" style="display: none;">Email</label>
       <input type="email" class="form-control" id="email" placeholder="Email" required>
-      <div class="invalid-feedback">
-        Please provide a valid email address.
-      </div>
+      <p id="error" style="display: none;">Email already exist!</p>
     </div>
     <div class="form-group">
       <label for="name" style="display: none;"></label>
@@ -224,115 +45,9 @@
     </div>
     <button type="button" class="btn btn-primary" id="submitButton" onclick="sendData()"disabled>Submit</button>
   </form>
-  
-    <!-- <form  id="form" > 
-        <div class="form-group" >
-          <section>
-            <h6>SELF REGISTER</h6>
-          </section>
-          <input type="name"  id="name"  placeholder="Name"/>
-          <br>
-          <input  type="email" id="email" aria-describedby="email" placeholder="Email" required />
-          <br>
-          <input  type="phone"  id="phone"  placeholder="Phone" required/>
-          <br>  
-          <input type="name"  id="company"  placeholder="company"/>
-          <br>
-          <div class="text-center">
-            <button type="submit" id="button" onclick="sendData()">SUBMIT</button>
-          </div>
-        </div>
-      </form> -->
-      <!-- <button type="button" id="home" onclick="goToHome()" style="display: none;">HOME</button> -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
-      <script>
-        var qrname
-        var useremail
-        var username
-        document.getElementById('form').addEventListener('input', function() {
-          var form = event.target.form;
-          var emailInput = document.getElementById('email');
-          var submitButton = document.getElementById('submitButton');
-
-          if (emailInput.validity.valid) {
-            submitButton.disabled = false;
-          } else {
-            submitButton.disabled = true;
-          }
-        });
-
-
-        const socket = io()
-        function sendData(){
-          var name = document.getElementById('name').value;
-          var email = document.getElementById('email').value;
-          var phone = document.getElementById('phone').value;
-          var company = document.getElementById('company').value;
-          let data = {
-            name:name,
-            email:email,
-            phone:phone,
-            company:company
-          }
-          socket.emit('saveData', data)
-          document.getElementById('email').value = ''
-          document.getElementById('name').value = ''
-          document.getElementById('company').value = ''
-          document.getElementById('phone').value = ''
-          submitButton.disabled = true
-          document.getElementById('form').style.display = 'none'
-          document.getElementById('container').style.display = 'block'
-          }
-          const firebaseConfig = {
-            apiKey: "AIzaSyBZnFJQJlCQEFdvmFLI0gkSCHHiH1lUAWo",
-            authDomain: "node-file-uploader.firebaseapp.com",
-            projectId: "node-file-uploader",
-            storageBucket: "node-file-uploader.appspot.com",
-            messagingSenderId: "345185058962",
-            appId: "1:345185058962:web:8629baa36820a3c410a64b",
-            measurementId: "G-GSV81VWQE1"
-          };
-          socket.on('saveQr', (e) => {
-            qrname = e.data
-            useremail = e.email
-            username = e.name
-            uploadImage(e.base64QRCode)
-          })
-
-          firebase.initializeApp(firebaseConfig);
-          function uploadImage(your_base64_image) {
-          const base64Data = your_base64_image.replace(/^data:image\/\w+;base64,/, '');
-
-          const metadata = {
-            contentType: 'image/jpeg', // Update the content type if needed (e.g., 'image/png')
-          };
-
-          firebase
-            .storage()
-            .ref('qrCodes')
-            .child(`${qrname}`)
-            .putString(base64Data, 'base64', metadata)
-            .then((snapshot) => snapshot.ref.getDownloadURL())
-            .then((url) => {
-              let data = {
-                url:url,
-                email:useremail,
-                name:username
-              }
-              socket.emit('sendEmail',data)
-              useremail = ''
-              document.getElementById('container').style.display = 'none'
-              document.getElementById('msg').style.display = 'block'
-            })
-            .catch(console.error);
-        }
-
-        function goToForm(){
-          document.getElementById('msg').style.display = 'none'
-          document.getElementById('form').style.display = 'block'
-        }
-      </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+  <script src="../asset/js/qr.js"> </script>
 </body>
 </html>

@@ -1,0 +1,117 @@
+html,
+body 
+{
+    min-width: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    overflow: hidden;
+}
+video
+{
+    width: 40rem;   
+    border-radius: 2em;
+    border: .2em solid #f6a508;
+    box-shadow: #f6a508 0px 1px 16px 0px, #f6a508 0px 0px 0px 1px;
+}
+
+#msg{
+    width: 100%;
+    height: 100%;
+}
+/* Keyframes Spin */
+@keyframes spin 
+{
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+  /* Spinner */
+.spinner 
+{
+    --spinner-color: white;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+.spinner--dotted 
+{
+    width: 10rem;
+    border: .5rem dotted var(--spinner-color);
+    display: block;
+    animation-duration: 5s;
+}
+h1{
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.5em;
+    color: aliceblue;
+}
+h2{
+    position: absolute;
+    top: 18%;
+    font-size:2.5em;
+    color: #f6a508;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: #f6a508 2px solid ;
+}
+h3{
+    text-align: center;
+    position: absolute;
+    top: 30%;
+    font-size:2.5em;
+    color: #f6a508;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: #f6a508 2px solid ;
+}
+#name{
+    font-size: 2em;
+    letter-spacing: 30px;
+}
+#logo{
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 0;
+    margin: 50px;
+}
+/* Media Query for Mobile Screens */
+@media only screen and (max-width: 768px) {
+    video {
+        max-width:20rem;
+        max-height:20rem;
+        object-fit: fill;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.8em;
+    }
+
+    #name {
+        font-size: 1.5em;
+    }
+
+    #logo {
+        width: 200px;
+        margin: 30px;
+    }
+}

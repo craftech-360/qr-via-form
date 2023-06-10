@@ -4,99 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="../asset/js/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <title>Dashboard</title>
+    <link href="../asset/files/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="../asset/css/dashboard.css">
 </head>
-<style>
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        top: 0;
-        box-sizing: border-box;
-        background-color: black;
-        font-family: 'Poppins', sans-serif;
-    }
-    ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-    }
-    .my-custom-scrollbar {
-        top: 25%;
-        left: 10%;
-        width: 80%;
-        background-color: aliceblue;
-        position: relative;
-        /* margin: 100px 100px 0 100px; */
-        height: 600px;
-        overflow: auto;
-        border-radius: 10px;
-        box-shadow: 0 0 50px #ccc;
-    }
-    .table-wrapper-scroll-y {
-        display: block;
-    }
-    th{
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-    #search{
-        width: 200px;
-    }
-    section{
-        position: absolute;
-        width: 1000px;
-        top: 88%;
-        left: 15%;
-        display: flex;
-        flex-direction: row;
-        justify-content:space-between
-    }
-    .btn{
-        background-color: aliceblue;
-        color: green;
-    }
-    th{
-        text-transform:uppercase;
-    }
-    h1{
-          position: absolute;
-          bottom: 10px;
-          font-size: 1.5em;
-          color: aliceblue;
-          left: 40%;
-        }
-        #logo{
-          position: absolute;
-          width: 300px;
-          top: 0;
-          left: 0;
-          margin: 50px;
-        }
-        
-        h2{
-    position: absolute;
-    top: 12%;
-    font-size:2.5em;
-    color: #f6a508;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: #f6a508 2px solid ;
-    left: 40%;
-}
-
-    
-</style>
 <body onload="onLoad()">
     <h2 id="scan">Registered User List</h2>
     <h1>Crafting Magical Experiences</h1>
     <img src="../asset/Screens/logo.png" id="logo" alt="">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
         <table class="table">
-        
         </table>
     </div>
     <section>
@@ -115,73 +33,7 @@
             </ul>
         </nav>
     </section>
-
     <script src="../asset/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
-
-    <script>
-        const socket = io();
-        var btn = 1
-        function myFunction(){
-
-            var email = document.getElementById("search").value
-            if(!email){
-                alert('please fill the input!')
-                return
-            }
-            else{
-                socket.emit('getEmails', email)
-            }
-        }
-
-        function onLoad(){
-            // location.reload()
-            socket.emit('getAll',1)
-        }
-
-        function getPage(e){
-            // location.reload()
-            // alert(e)
-            socket.emit('getAll',e)
-            if(e == 1){
-                btn = 1
-            }
-            if(e == 2){
-                btn = 111
-            }
-            if(e == 3){
-                btn = 221
-            }
-            if(e == 4){
-                btn = 331
-            }
-            if(e == 5){
-                btn = 441
-            }
-            if(e == 6){
-                btn = 551
-            }
-            if(e == 7){
-                btn = 661
-            }
-            if(e == 8){
-                btn = 771
-            }
-            if(e == 9){
-                btn = 881
-            }
-            if(e == 10){
-                btn = 991
-            }
-        }
-
-        socket.on('userList',(e) => {
-            // location.reload()
-            // console.log(e);
-            document.getElementsByTagName("table")[0].innerHTML= "<tr><th>"+`#`+"</th><th>"+`Name`+"</th><th>"+`Count`+"</th><th>"+`Code`+"</th><th>"+`Attended`+"</th></tr>"
-            for (let i = 0; i < e.length; i++) {
-                document.getElementsByTagName("table")[0].innerHTML+= "<tr><td>"+(i+btn)+"</td><td>"+e[i].name+"</td><td>"+e[i].count+"</td><td>"+e[i].uniqueCode+"</td><td>"+e[i].isAttended+"</td></tr>"
-        }
-        })
-    </script>
+    <script src="../asset/js/dashboard.js"></script>
 </body>
 </html>

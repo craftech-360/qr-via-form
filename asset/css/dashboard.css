@@ -1,0 +1,78 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    box-sizing: border-box;
+    background-color: black;
+    font-family: 'Poppins', sans-serif;
+}
+::-webkit-scrollbar {
+width: 0px;
+background: transparent; /* make scrollbar transparent */
+}
+.my-custom-scrollbar {
+    top: 25%;
+    left: 10%;
+    width: 80%;
+    background-color: aliceblue;
+    position: relative;
+    /* margin: 100px 100px 0 100px; */
+    height: 600px;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 50px #ccc;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+th{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+#search{
+    width: 200px;
+}
+section{
+    position: absolute;
+    width: 1000px;
+    top: 88%;
+    left: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between
+}
+.btn{
+    background-color: aliceblue;
+    color: green;
+}
+th{
+    text-transform:uppercase;
+}
+h1{
+      position: absolute;
+      bottom: 10px;
+      font-size: 1.5em;
+      color: aliceblue;
+      left: 40%;
+    }
+    #logo{
+      position: absolute;
+      width: 300px;
+      top: 0;
+      left: 0;
+      margin: 50px;
+    }
+    
+    h2{
+position: absolute;
+top: 12%;
+font-size:2.5em;
+color: #f6a508;
+text-transform: uppercase;
+letter-spacing: 2px;
+border-bottom: #f6a508 2px solid ;
+left: 40%;
+}

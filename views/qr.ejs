@@ -12,14 +12,16 @@
 <body>
   <h1>Crafting Magical Experiences</h1>
   <img src="../asset/Screens/logo.png" id="logo" alt="">
-  <div class="alert alert-success alert-dismissible fade show"  id="msg" style="display: none;">
+  <div class="alert alert-success alert-dismissible fade show"  id="success" style="display: none;">
     <strong>Success!</strong> Your form has been sent successfully.
     <button type="button" class="btn-close" data-bs-dismiss="alert" onclick="goToForm()"></button>
   </div>
-  <div  style="display: none;" id="container" class="container" role="status" id="loading">
-    <span class="spinner spinner--dotted"></span>
+  <div id="main" >
+    <div   id="container" class="container" role="status" id="loading" style="display: none;">
+      <span class="spinner spinner--dotted"></span>
+    </div>
   </div>
-  <form id="form" class="needs-validation" novalidate>
+  <form id="form" class="needs-validation" novalidate >
     <section>
       <h6>SELF REGISTER</h6>
     </section>

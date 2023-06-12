@@ -29,12 +29,12 @@ function sendData(){
   }
   socket.emit('saveData', data)
   document.getElementById('error').style.display = 'none'
-  name.value = ''
-  email.value = ''
-  phone.value = ''
-  company.value = ''
+  document.getElementById('name').value = ''
+  document.getElementById('email').value = ''
+  document.getElementById('phone').value = ''
+  document.getElementById('company').value = ''
   submitButton.disabled = true
-  form.style.display = 'none'
+  document.getElementById('form').style.display = 'none'
   spinner.style.display = 'block'
   }
   const firebaseConfig = {
@@ -76,13 +76,13 @@ function sendData(){
       socket.emit('sendEmail',data)
       useremail = ''
       spinner.style.display = 'none'
-      document.getElementById('msg').style.display = 'block'
+      document.getElementById('success').style.display = 'block'
     })
     .catch(console.error);
 }
 
 function goToForm(){
-  document.getElementById('msg').style.display = 'none'
+  document.getElementById('success').style.display = 'none'
   form.style.display = 'block'
 }
 

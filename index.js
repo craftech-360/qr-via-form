@@ -158,8 +158,12 @@ io.on('connection', (socket) => {
         from: '"Craftech360" <accounts@craftech360.com>', // sender address
         to: "", // list of receivers
         subject: "Simplify Event Registration with Our QR Code Application", // Subject line
-        html: `  <body style="width: 100%;height: 100%;display: flex;justify-content: center;">
-        <div style=" border: 2px solid black; text-align:left; width: 50%;letter-spacing: 2px; padding: 40px 30px 40px 30px;margin-left:200px">
+        html: `  <body style="width: 100vw;height: 100vh;display: flex;justify-content: center; align-items: center;">
+        <div style=" border: 2px solid black; text-align:left; width: 50vw; height:50vh;letter-spacing: 1px; padding: 20px 20px; word-wrap: break-word;@media(min-width: 768px) {
+          width: 80vw;
+          height: auto;
+          border: 2px solid white;
+        }">
         <p>Dear ${e.name},</p>
         <p>Thank you for exploring our QR code registration application! We appreciate your interest in simplifying event registration and enhancing attendee experiences.</p>
         <p>Our company, Craftech360, is dedicated to revolutionizing the event industry through innovative technology solutions. With a passion for creating seamless and engaging experiences, we have developed a cutting-edge QR code registration application that streamlines the check-in process, eliminates physical tickets, and ensures a hassle-free registration experience.</p>

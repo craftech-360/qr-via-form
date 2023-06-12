@@ -50,12 +50,6 @@ form{
     font-size: 2rem;
     color: #f6a508;
   }
-  #container{
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
   h1{
     position: absolute;
     bottom: 10px;
@@ -126,7 +120,6 @@ form{
     position: absolute;
     width: 12rem;
     margin: 10px;
-    
   }
 
   #submitButton {

@@ -149,9 +149,13 @@ io.on('connection', (socket) => {
         service: 'Gmail',
         secure: true,
         auth: {
-            user: "craftech360@gmail.com",
-            pass: "zfjdfqsspfoiqast"
-        },
+          user: "apoorva@craftech360.com",
+          pass: "rlfoybhgcwgrwwsd"
+      },
+        // auth: {
+        //     user: "craftech360@gmail.com",
+        //     pass: "zfjdfqsspfoiqast"
+        // },
       })
       let mailOptions;
       mailOptions = {

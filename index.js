@@ -12,16 +12,16 @@ const express = require('express'),
       qr = require('qr-image'),
       nodemailer = require('nodemailer'),
       md5 = require("md5");
-
+app.use(cors())
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile)
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({extended: true,limit: '50mb'}));
 app.use('/asset', express.static(path.join(__dirname, 'asset')))
-app.use(cors())
+
 
 app.get('/', function (req, res) {
-  res.render("dashboard.ejs");
+  res.render("test.ejs");
 });
 app.get('/home', function (req, res) {
   res.render("home.ejs");

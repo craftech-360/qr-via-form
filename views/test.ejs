@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Scanner</title>
+  <!-- ZXing CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.18.2"></script>
+  <!-- Instascan CDN -->
+  <script src="../asset/files/instascan.min.js"></script>
+</head>
+<body>
+  <video id="video" width="100%" height="100%" playsinline></video>
+
+  <script>
+    // Check if the device is a mobile device
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobileDevice) {
+      // Mobile device: Use ZXing library for QR scanning
+      const codeReader = new ZXing.BrowserQRCodeReader();
+
+      codeReader.decodeFromVideoDevice(null, 'video', (result) => {
+        console.log('QR Code detected:', result.text);
+
+        // Perform further actions with the scanned QR code value
+
+        // Stop scanning for QR codes
+        codeReader.reset();
+      }).catch((error) => {
+        console.error('QR Code scanning error:', error);
+      });
+    } else {
+      // Web browser: Use Instascan library for QR scanning
+      const video = document.getElementById('video');
+
+      const scanner = new Instascan.Scanner({
+        video: video
+      });
+
+      scanner.addListener('scan', (content) => {
+        console.log('QR Code detected:', content);
+
+        // Perform further actions with the scanned QR code value
+
+        // Stop scanning for QR codes
+        scanner.stop();
+      });
+
+      Instascan.Camera.getCameras().then((cameras) => {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch((error) => {
+        console.error('Camera access error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
